@@ -1,5 +1,9 @@
 import logging
 import os
+import os as _os, json as _json
+def _lb_extra_body():
+    v = _os.environ.get("LIVEBENCH_EXTRA_BODY")
+    return _json.loads(v) if v else None
 import sys
 import time
 import traceback
@@ -91,6 +95,7 @@ def chat_completion_openai(
     try:
         if stream:
             stream: Stream[ChatCompletionChunk] = client.chat.completions.create(
+                extra_body=_lb_extra_body(),
                 model=model,
                 messages=messages,
                 stream=True,
@@ -119,6 +124,7 @@ def chat_completion_openai(
                 raise
         else:
             response: ChatCompletion = client.chat.completions.create(
+                extra_body=_lb_extra_body(),
                 model=model,
                 messages=messages,
                 stream=False,
