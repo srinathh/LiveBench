@@ -465,7 +465,11 @@ def gen_judgments(
         nltk.download('averaged_perceptron_tagger')
         
         # Get questions for this category
-        if_questions = list(set([m.question for m in old_instruction_following_matches]))
+        # Local fix: question dicts are unhashable; dedupe by question_id.
+        _seen = {}
+        for m in old_instruction_following_matches:
+            _seen.setdefault(m.question['question_id'], m.question)
+        if_questions = list(_seen.values())
         task_name = if_questions[0]['task']
 
         for m in model_answers:

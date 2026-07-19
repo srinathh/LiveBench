@@ -126,7 +126,9 @@ def get_categories_tasks(bench_name: str):
 
     else:
         # specify a category or task
-        category_name = split_bench_name[1].split('_')[0]
+        # Local fix: category names may contain underscores (data_analysis,
+        # instruction_following); splitting on '_' broke subset judgment.
+        category_name = split_bench_name[1]
 
         categories = {category_name: get_hf_dataset(category_name)}
 
