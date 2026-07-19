@@ -78,7 +78,8 @@ AGENTIC_CODING_CATEGORIES = {"agentic_coding", "agentic_coding_v2"}
 
 LIVE_BENCH_RELEASES = {"2024-07-26", "2024-06-24", "2024-08-31", "2024-11-25", "2025-04-02", "2025-04-25", "2025-05-30", "2025-11-25", "2025-12-23", "2026-01-08", "2026-06-25"}
 
-LIVE_BENCH_ROOT_PATH = Path(__file__).parent
+# Allow relocating question/answer/judgment data outside site-packages
+LIVE_BENCH_ROOT_PATH = Path(os.environ.get("LIVEBENCH_DATA_ROOT", Path(__file__).parent))
 
 
 @dataclasses.dataclass
